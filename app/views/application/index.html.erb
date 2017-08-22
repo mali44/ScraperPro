@@ -1,0 +1,13 @@
+<%= form_tag "index", :id => "my_form" do -%>
+
+  Comment: <%= text_area_tag(:comment,"",size: "24x6") %>
+  <%= submit_tag "Submit" %>
+<% end -%>
+
+
+
+<% if(@page_links) %>
+  <% @page_links.each do |w| %>
+    <%= w.join('<br />') %> <br />
+  <% end -%>
+<% end -%>
