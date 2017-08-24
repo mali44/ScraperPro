@@ -1,13 +1,31 @@
 <%= form_tag "index", :id => "my_form" do -%>
 
-  Comment: <%= text_area_tag(:comment,"",size: "24x6") %>
-  <%= submit_tag "Submit" %>
+  SiteLinks: <%= text_area_tag(:comment,"",size: "24x6") %>
+  <%= submit_tag "Tara" %>
 <% end -%>
 
+<div class="container">
+  <h2>Basic Table</h2>
+  <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Sublinks</th>
+        <th>Title</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> <% if(@page_links) %>
+              <% @page_links.each do |w| %>
+              <%= link_to w.join('<br />'),w.join('<br />') %> <br />
+              <% end -%>
+            <% end -%></td>
+        <td> </td>
+        <td> </td>
+      </tr>
 
-
-<% if(@page_links) %>
-  <% @page_links.each do |w| %>
-    <%= w.join('<br />') %> <br />
-  <% end -%>
-<% end -%>
+    </tbody>
+  </table>
+</div>
