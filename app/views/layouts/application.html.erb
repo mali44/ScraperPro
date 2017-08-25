@@ -9,6 +9,6 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= yield.force_encoding(Encoding::UTF_8) %>
   </body>
 </html>

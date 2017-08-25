@@ -5,25 +5,58 @@
 <% end -%>
 
 <div class="container">
-  <h2>Basic Table</h2>
-  <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
-  <table class="table">
+  <h2>Alt Link Tablosu</h2>
+  <p>Aradiginiz site icin alt linkleri listeler</p>
+  <table class="table" align="left">
     <thead>
       <tr>
-        <th>Sublinks</th>
-        <th>Title</th>
-        <th>Description</th>
+        <th width="400px">Sublinks</th>
+        <th width="300px">Title</th>
+        <th width="300px">Description</th>
+        <th width= "100px">Best Title</th>
+        <th width= "100px">Image size</th>
+        <th></th>
+        <th></th>
+
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td> <% if(@page_links) %>
-              <% @page_links.each do |w| %>
-              <%= link_to w.join('<br />'),w.join('<br />') %> <br />
+        <td width ="400px">
+          <% if(@page_links) %>
+          <% @page_links.each do |wa| %>
+              <% wa.each do |w| %>
+              <%= link_to w,w %> <br />
+              <% end -%>
               <% end -%>
             <% end -%></td>
-        <td> </td>
-        <td> </td>
+
+        <td width="300px">
+          <% if(@title) %>
+          <% @title.each do |title| %>
+
+              <%= link_to title %> <br />
+              <% end -%>
+
+            <% end -%>
+        </td>
+
+        <td  width="300px">
+          <% if(@desc) %>
+          <% @desc.each do |descr| %>
+
+              <%= link_to descr %> <br />
+              <% end -%>
+
+            <% end -%>
+
+         </td>
+
+         <td>
+           <%= @best_title %>
+          </td>
+          <td>
+           </td>
       </tr>
 
     </tbody>
