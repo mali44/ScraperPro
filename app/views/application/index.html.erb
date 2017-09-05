@@ -35,7 +35,7 @@
           <% if(@title) %>
           <% @title.each do |title| %>
 
-              <%= link_to title %> <br />
+            <%= link_to title %> <br />
               <% end -%>
 
             <% end -%>
@@ -43,9 +43,8 @@
 
         <td  width="300px">
           <% if(@desc) %>
-          <% @desc.each do |descr| %>
-
-              <%= link_to descr %> <br />
+          <% @desc.each do |desc| %>
+          <%= link_to desc %> <br />
               <% end -%>
 
             <% end -%>
@@ -53,7 +52,14 @@
          </td>
 
          <td>
-           <%= @best_title %>
+           <% if(@scrimage) %>
+           <% @scrimage.each do |bt| %>
+
+               <img src="<%=  bt %>" width="32" height="32"> <br />
+               <% end -%>
+
+             <% end -%>
+           <%=  %>
           </td>
           <td>
            </td>
