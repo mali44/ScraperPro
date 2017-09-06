@@ -10,11 +10,11 @@
   <table class="table" align="left">
     <thead>
       <tr>
-        <th width="400px">Sublinks</th>
-        <th width="300px">Title</th>
-        <th width="300px">Description</th>
-        <th width= "100px">Best Title</th>
-        <th width= "100px">Image size</th>
+        <th width="350px">Sublinks</th>
+        <th width="200px">ExternalLinks</th>
+        <th width="350px">Description</th>
+        <th width= "350px">Title</th>
+        <th width= "50px">Images</th>
         <th></th>
         <th></th>
 
@@ -23,46 +23,71 @@
     <tbody>
       <tr>
         <td width ="400px">
-          <% if(@page_links) %>
-          <% @page_links.each do |wa| %>
-              <% wa.each do |w| %>
-              <%= link_to w,w %> <br />
-              <% end -%>
-              <% end -%>
-            <% end -%></td>
 
-        <td width="300px">
-          <% if(@title) %>
+          <% if(@internallinks) %>
+          <% @internallinks.each do |int| %>
+          <%= link_to  int %> <br />
+
+          <% end %>
+          <% end %>
+          <!-- <% if(@page_links) %>
+          <% @page_links.each do |wa| %>
+            <%= link_to wa,wa %> <br />
+
+              <% end -%>
+            <% end -%></td> -->
+          </td>
+        <td width="200px">
+          <% if(@externalLink) %>
+          <% @externalLink.each do |ext| %>
+          <%= link_to ext %> <br />
+          <% end %>
+
+          <% end %>
+
+          <!-- <% if(@title) %>
           <% @title.each do |title| %>
 
             <%= link_to title %> <br />
               <% end -%>
 
-            <% end -%>
+            <% end -%> -->
         </td>
 
-        <td  width="300px">
-          <% if(@desc) %>
-          <% @desc.each do |desc| %>
-          <%= link_to desc %> <br />
+        <td  width="340px">
+          <% if(@description) %>
+          <%@description.each do |desc| %>
+          <%= link_to desc %> <br  />
+              <% end -%>
               <% end -%>
 
-            <% end -%>
 
          </td>
 
-         <td>
-           <% if(@scrimage) %>
-           <% @scrimage.each do |bt| %>
+        <td width="350px">
 
-               <img src="<%=  bt %>" width="32" height="32"> <br />
-               <% end -%>
+          <% if(@title) %>
+          <%@title.each do |ttl| %>
+          <%= link_to ttl %> <br  />
+              <% end -%>
+              <% end -%>
 
-             <% end -%>
-           <%=  %>
+
+
           </td>
-          <td>
-           </td>
+
+          <td width="32px">
+            <% if(@scrimage) %>
+            <% @scrimage.each do |bt| %>
+
+                <img src="<%=  bt %>" width="32" height="32"> <br />
+                <% end -%>
+
+              <% end -%>
+
+          </td>
+
+
       </tr>
 
     </tbody>

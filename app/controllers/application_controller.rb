@@ -27,31 +27,36 @@ class ApplicationController < ActionController::Base
       page_links=nil
       puts params[:comment]
       all_links = Array.new(0)
-      title= Array.new(0)
-      description=Array.new(0)
+
       best_title=Array.new(0)
       scrape_Image=Array.new(0)
 
       links= params[:comment].split(/\n+/).each do |w|
       page_links = scrape_first(w.strip.to_s)
-      all_links.push(page_links).each do |tl|
-      title.push(scrape_title(w.strip.to_s))
-      description.push(scrape_desc(w.strip.to_s))
-      best_title.push(scrape_best_title(w.strip.to_s))
       @scrimage=scrape_image(w.strip.to_s)
 
-      end
+      puts "Aciklama Site  #{@description} "
+
+    end
+
+      #
+      # all_links.each do |t|
+      #   t.each do |t2|
+      #     puts "_____________________#{title.push(scrape_title(t2))}"
+      #
+      #   end
+
+
       ##puts all_link
 
 
+        @page_links=page_links
+        # @title= title
 
-        end
-
-        @page_links=all_links
-        @title= title
-        @description=description
-        @best_title=best_title
-
+        # puts "aaa =#{@best_title}"
+        # page2=MetaInspector.new("https://twitter.com/MediaCat ")
+        # btitle=page2.best_title
+        # puts "BEST TITLE = #{btitle}"
 
 
 
@@ -62,11 +67,51 @@ class ApplicationController < ActionController::Base
 
     def scrape_first(url)
 
+      #
+              # page = MetaInspector.new(url)
 
-      page = MetaInspector.new(url)
-      all_links=page.links.all
+        page = MetaInspector.new(url)
+        title= Array.new(0)
+        desc= Array.new
+        puts "\nScraping #{page.url} returned these results:"
+        puts "\nTITLE: #{page.title} "
+        desc.push(page.description)
+        title.push(page.title)
+        puts "META DESCRIPTION: #{page.meta['description']}"
+        puts "META KEYWORDS: #{page.meta['keywords']}"
 
-      return all_links
+        puts "\n#{page.links.internal.size} internal links found..."
+        page.links.internal.each do |link|
+          puts " ==> #{link}"
+          @description=desc.push(scrape_desc(link))
+          @title=title.push(scrape_title(link))
+
+
+
+        end
+        @internallinks= page.links.internal
+
+        puts "\n#{page.links.external.size} external links found..."
+        page.links.external.each do |link|
+          puts " ==> #{link}"
+        end
+
+
+        puts " OKEY PUT IT #{title}"
+
+        puts "\n#{page.links.non_http.size} non-http links found..."
+        page.links.non_http.each do |link|
+          puts " ==> #{link}"
+
+        end
+
+
+
+        puts "\nto_hash..."
+        puts page.to_hash
+
+
+
 
 
     rescue Exception => e
@@ -74,27 +119,13 @@ class ApplicationController < ActionController::Base
 
   end
 
-  def scrape_title(url)
-
-
-      page = MetaInspector.new(url)
-      title= page.title
-
-      return title
-
-
-    rescue Exception => e
-      false
-
-  end
 
 
     def scrape_desc(url)
 
-        puts "HEYYYYYYYYYYYYYYYYYYYYYYYYYY"
         page = MetaInspector.new(url)
         desc= page.description
-
+        puts " LOOK #{desc}"
         return desc
 
 
@@ -105,11 +136,11 @@ class ApplicationController < ActionController::Base
 
     end
 
-    def scrape_best_title(url)
+    def scrape_title(url)
       page= MetaInspector.new(url)
-      best_title=page.best.title
 
-      return best_title
+
+      return title
     rescue Exception => e
       false
 
@@ -119,20 +150,11 @@ class ApplicationController < ActionController::Base
       page = MetaInspector.new(url)
       images=page.images
 
-      page.images.each do |link|
-      puts " ==> #{link}"
-    end
+
 
       return images
+    rescue Exception => e
+      false
+
     end
-
-
-
-
-
-    #  doc = Nokogiri::HTML(open("http://muhammetaliariturk.com/"))
-    #  render plain: doc
-
-
-
 end
