@@ -79,9 +79,11 @@
           <td width="32px">
             <% if(@scrimage) %>
             <% @scrimage.each do |bt| %>
+            <% bt.each do |bt2| %>
 
-                <img src="<%=  bt %>" width="32" height="32"> <br />
+                <img src="<%=  bt2 %>" width="32" height="32"> <br />
                 <% end -%>
+                  <% end -%>
 
               <% end -%>
 

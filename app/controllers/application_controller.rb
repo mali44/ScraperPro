@@ -24,21 +24,28 @@ class ApplicationController < ActionController::Base
 
   def index_post
 
-      page_links=nil
+      title= Array.new(0)
+      desc= Array.new(0)
+      page_links=Array.new(0)
       puts params[:comment]
       all_links = Array.new(0)
-
+      @scrimage = Array.new(0)
       best_title=Array.new(0)
       scrape_Image=Array.new(0)
 
-      links= params[:comment].split(/\n+/).each do |w|
-      page_links = scrape_first(w.strip.to_s)
-      @scrimage=scrape_image(w.strip.to_s)
 
-      puts "Aciklama Site  #{@description} "
+      links= params[:comment].split(/\n+/)
+      while links.any?
+      url = links.pop.strip.to_s
+      puts "links = #{url} "
+      page_links.push(scrape_first(url))
+      @scrimage.push(scrape_image(url))
 
     end
 
+      @page_links=page_links
+      @title=title
+      @desc=desc
       #
       # all_links.each do |t|
       #   t.each do |t2|
@@ -50,7 +57,6 @@ class ApplicationController < ActionController::Base
       ##puts all_link
 
 
-        @page_links=page_links
         # @title= title
 
         # puts "aaa =#{@best_title}"
@@ -71,8 +77,7 @@ class ApplicationController < ActionController::Base
               # page = MetaInspector.new(url)
 
         page = MetaInspector.new(url)
-        title= Array.new(0)
-        desc= Array.new
+
         puts "\nScraping #{page.url} returned these results:"
         puts "\nTITLE: #{page.title} "
         desc.push(page.description)
@@ -83,8 +88,8 @@ class ApplicationController < ActionController::Base
         puts "\n#{page.links.internal.size} internal links found..."
         page.links.internal.each do |link|
           puts " ==> #{link}"
-          @description=desc.push(scrape_desc(link))
-          @title=title.push(scrape_title(link))
+          # @description=desc.push(scrape_desc(link))
+          # @title=title.push(scrape_title(link))
 
 
 
