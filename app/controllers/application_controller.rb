@@ -24,12 +24,14 @@ class ApplicationController < ActionController::Base
 
   def index_post
 
-      title= Array.new(0)
-      desc= Array.new(0)
+       @title= Array.new(0)
+      @desc= Array.new(0)
       page_links=Array.new(0)
       puts params[:comment]
       all_links = Array.new(0)
       @scrimage = Array.new(0)
+      @internallinks= Array.new(0)
+      @externalLink= Array.new(0)
       best_title=Array.new(0)
       scrape_Image=Array.new(0)
 
@@ -37,15 +39,15 @@ class ApplicationController < ActionController::Base
       links= params[:comment].split(/\n+/)
       while links.any?
       url = links.pop.strip.to_s
-      puts "links = #{url} "
+      puts "links = #{url}1 "
       page_links.push(scrape_first(url))
       @scrimage.push(scrape_image(url))
 
     end
 
       @page_links=page_links
-      @title=title
-      @desc=desc
+      puts "Page Links = #{page_links}"
+
       #
       # all_links.each do |t|
       #   t.each do |t2|
@@ -80,21 +82,22 @@ class ApplicationController < ActionController::Base
 
         puts "\nScraping #{page.url} returned these results:"
         puts "\nTITLE: #{page.title} "
-        desc.push(page.description)
-        title.push(page.title)
+        @desc.push(page.description)
+        @title.push(page.title)
         puts "META DESCRIPTION: #{page.meta['description']}"
         puts "META KEYWORDS: #{page.meta['keywords']}"
 
         puts "\n#{page.links.internal.size} internal links found..."
         page.links.internal.each do |link|
           puts " ==> #{link}"
-          # @description=desc.push(scrape_desc(link))
-          # @title=title.push(scrape_title(link))
+            @desc.push(scrape_desc(link))
+           @title.push(scrape_title(link))
 
 
 
         end
-        @internallinks= page.links.internal
+        @internallinks.push(page.links.internal)
+        @externalLink.push(page.links.external)
 
         puts "\n#{page.links.external.size} external links found..."
         page.links.external.each do |link|
@@ -102,7 +105,7 @@ class ApplicationController < ActionController::Base
         end
 
 
-        puts " OKEY PUT IT #{title}"
+
 
         puts "\n#{page.links.non_http.size} non-http links found..."
         page.links.non_http.each do |link|
@@ -115,12 +118,12 @@ class ApplicationController < ActionController::Base
         puts "\nto_hash..."
         puts page.to_hash
 
-
+        return @internallinks
 
 
 
     rescue Exception => e
-      false
+      puts "Error found #{e}"
 
   end
 
